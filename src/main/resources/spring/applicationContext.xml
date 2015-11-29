@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop-3.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <!--加载配置文件-->
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:db.properties"/>
+    </bean>
+    <!--数据源,使用dbcp-->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <!-- 连接池最大数量 -->
+        <property name="maxActive" value="10"></property>
+        <!-- 连接池最大空闲 -->
+        <property name="maxIdle" value="5"></property>
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--加载mybatis的配置文件-->
+        <property name="configLocation" value="mybatis/mybatis-config.xml"></property>
+        <!--数据源-->
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!--原始dao接口-->
+    <bean id="UserDao" class="krelve.ssm.db.dao.UserDaoImpl">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+    <!--mapper配置   难道每一个都要配置？所以要使用批量扫描-->
+    <!--    <bean id="UserMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+            <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+            <property name="mapperInterface" value="krelve.ssm.db.mapper.UserMapper"/>
+        </bean>-->
+
+    <!--mapper 批量扫描,从mapper包中扫描出mapper接口，自动创建代理对象并且在spring容器中注册
+        自动扫描出的mapper的bean的id为mapper类名(首字母小写)-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--如果扫描多个包,每个包中间使用逗号分隔-->
+        <property name="basePackage" value="krelve.ssm.db.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+</beans>
