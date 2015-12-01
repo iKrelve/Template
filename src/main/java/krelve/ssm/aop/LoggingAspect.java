@@ -22,7 +22,7 @@ public class LoggingAspect {
     public void declareJointPointExpression() {
     }
 
-    @Before("declareJointPointExpression")
+    @Before("declareJointPointExpression()")
     public void beforeMethod(JoinPoint joinPoint) {
         String methodName = joinPoint.getSignature().getName();
         List<Object> args = Arrays.asList(joinPoint.getArgs());

@@ -1,5 +1,5 @@
 import krelve.ssm.db.dao.UserDao;
-import krelve.ssm.db.mapper.UserMapper;
+import krelve.ssm.mapper.UserMapper;
 import krelve.ssm.po.User;
 import krelve.ssm.po.UserExample;
 import org.junit.Before;
@@ -18,7 +18,7 @@ public class UserMapperTest {
 
     @Before
     public void setUp() throws Exception {
-        applicationContext = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
+        applicationContext = new ClassPathXmlApplicationContext("spring/spring-mybatis.xml");
     }
 
     @Test

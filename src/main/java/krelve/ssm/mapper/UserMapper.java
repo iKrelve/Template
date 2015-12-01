@@ -1,8 +1,9 @@
-package krelve.ssm.db.mapper;
+package krelve.ssm.mapper;
 
 import krelve.ssm.po.User;
 import krelve.ssm.po.UserExample;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

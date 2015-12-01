@@ -4,8 +4,6 @@
        xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
-http://www.springframework.org/schema/tx
-http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
 http://www.springframework.org/schema/aop
 http://www.springframework.org/schema/aop/spring-aop-3.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
     <!--加载配置文件-->
@@ -14,7 +12,7 @@ http://www.springframework.org/schema/aop/spring-aop-3.2.xsd http://www.springfr
               class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
             <property name="location" value="classpath:db.properties"/>
         </bean>-->
-    <context:property-placeholder location="db.properties"/>
+    <context:property-placeholder location="classpath:db.properties"/>
     <!--使AspectJ注释起作用：自动为匹配的类生成代理对象-->
     <aop:aspectj-autoproxy/>
     <!--数据源,使用dbcp-->
@@ -37,7 +35,7 @@ http://www.springframework.org/schema/aop/spring-aop-3.2.xsd http://www.springfr
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <!--加载mybatis的配置文件-->
-        <property name="configLocation" value="mybatis/mybatis-config.xml"></property>
+        <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"></property>
         <!--数据源-->
         <property name="dataSource" ref="dataSource"></property>
     </bean>
@@ -48,16 +46,15 @@ http://www.springframework.org/schema/aop/spring-aop-3.2.xsd http://www.springfr
     <!--mapper配置   难道每一个都要配置？所以要使用批量扫描-->
     <!--    <bean id="UserMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
             <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
-            <property name="mapperInterface" value="krelve.ssm.db.mapper.UserMapper"/>
+            <property name="mapperInterface" value="krelve.ssm.mapper.UserMapper"/>
         </bean>-->
 
     <!--mapper 批量扫描,从mapper包中扫描出mapper接口，自动创建代理对象并且在spring容器中注册
         自动扫描出的mapper的bean的id为mapper类名(首字母小写)-->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" p:basePackage="krelve.ssm.db.mapper"
-          p:sqlSessionFactoryBeanName="sqlSessionFactory">
-        <!--        &lt;!&ndash;如果扫描多个包,每个包中间使用逗号分隔&ndash;&gt;
-                <property name="basePackage" value="krelve.ssm.db.mapper"/>
-                <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--如果扫描多个包,每个包中间使用逗号分隔-->
+        <property name="basePackage" value="krelve.ssm.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 
 

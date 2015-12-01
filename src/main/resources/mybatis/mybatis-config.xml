@@ -8,6 +8,6 @@
     </typeAliases>
     <mappers>
         <!--和spring整合后，使用mapper扫描器，这里便不需要配置-->
-        <!--<package name="krelve.ssm.db.mapper"></package>-->
+        <!--<package name="krelve.ssm.mapper"></package>-->
     </mappers>
 </configuration>

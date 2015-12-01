@@ -21,6 +21,10 @@
         <fileset id="fileset" name="Spring Application Context" removed="false">
           <file>file://$MODULE_DIR$/src/main/resources/spring/applicationContext.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/springDispatcherServlet-servlet.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/spring/spring-service.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/spring/spring-service.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/spring/spring-transaction.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/spring/spring-transaction.xml</file>
         </fileset>
       </configuration>
     </facet>
